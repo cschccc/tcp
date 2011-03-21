@@ -1,8 +1,7 @@
 The computer science club at Hudson County Community College is developing
 a custom system for the college's tutoring center.
 
-The system will automate many tasks which are currently performed by the
-tutoring center staff, such as matching students with tutors, creating
+The system will automate many tasks which are currently being performed by the tutoring center staff, such as matching students with tutors, creating
 reports, and bookkeeping.
 
 You will need the following to compile the program:
@@ -10,5 +9,5 @@ You will need the following to compile the program:
 - OpenSSL
 - The Poco C++ Libraries
 
-We also use the HighCharts JavaScript library to create the graphical
+We also use the HighCharts JavaScript library to generate the graphical
 reports.
