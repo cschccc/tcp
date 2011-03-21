@@ -200,28 +200,42 @@ int RequestForTutorialAssistanceDialog::sendEmail()
 	QProgressDialog *progressDialog = new QProgressDialog(tr("Please wait..."), tr("Cancel"), 0, 100, this);
 	progressDialog->setWindowTitle(tr("Processing request"));
 
-	QString content = "HCCC TUTORIAL SERVICES REMINDER EMAIL\n\n"
-					  "Dear " + firstNameLineEdit->text() + ",\n\n"
-					  "The Assistant Dean, Head Tutors, and Staff of Tutorial Services sincerely hope that you will find your association with us congenial, helpful, and successful.\n"
-					  "What to expect:\n"
-					  "-In most cases, you will begin with 1 hour/per subject/per week of tutoring. Your appointment is for the entire semester. If you wish to cancel or change your appointment, please inform one of the Head Tutors. Please see the Head Tutor to request additional hours.\n"
-					  "-Tutors work WITH students not for students. The tutor will go over examples of similar problems in order to develop your understanding of concepts. You must be an active participant in your learning experience.\n"
-					  "-Tutors will not correct your homework or paper. They will provide useful comments and suggestions and serve as guides not as instructors or editors. This method fosters independent learning.\n"
-					  "-Tutors will not proofread your papers. They will help you develop proofreading and writing skills.\n"
-					  "-Tutors will not predict what your grade will be on your assignments. Tutors cannot speak for your instructor. Please ask your instructor for clarification about your coursework.\n"
-					  "-Identify your objectives and concerns: Be as specific as possible about what you want to achieve, how you hope to use the tutoring session, and what you want the session to focus on. Ask questions and listen to suggestions. Be sure to bring all necessary materials (class notes, assignment guidelines, textbooks, drafts, dictionary, thumb drive, etc.) to the session.\n"
-					  "-Group Tutoring: At times it may be necessary to share your session with other students; tutors work hard to serve the entire college community. Please be considerate of each other's needs and work.\n"
-					  "-Please be on time: If you are 15 minutes late, you will lose fifteen minutes of your session.\n"
-					  "-Call in advance: Two (2) consecutive missed sessions will cost you your tutoring slot. If you must misss a tutoring session, call us. You may be able to reschedule a makeup time for that missed session by contacting the Head Tutor.\n"
-					  "\n\nThe Writing Center\nJ204\n(201) 360-4370"
-					  "\n\nThe Tutoring Center\nB312/B317\n(201) 360-4187"
-					  "\n\nNorth Hudson Tutoring Center\nLower Level\n(201) 360-4623\n";
+	QString content = 
+			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
+			"<html xmlns=\"http://www.w3.org/1999/xhtml\">" 
+			"<head>" 
+			"<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\" />"
+			"<title>Welcome</title>"
+			"</head>" 
+			"<body>"
+			"<table border=\"0\" cellpadding=\"30\">"
+			"<tr>"
+			"<td><img src=\"http://www.mycoursewebsite.com/iwca.png\" alt=\"International Writing Centers Association Logo\" /></td>"
+			"<td><img src=\"http://www.mycoursewebsite.com/hccc.jpg\" alt=\"Hudson County Community College Logo\" /></td>"
+			"<td><img src=\"http://www.mycoursewebsite.com/nta.gif\" alt=\"National Tutoring Association Logo\" /></td>"
+			"</tr>"
+			"</table>"
+			"<h3>Dear " + firstNameLineEdit->text() + ", <br /><br />The Staff of Tutorial Services welcomes you. Below are some helpful tips:</h3>"
+			"<ul>"
+			"<li><p>Students may have to wait before a tutor is available.</p></li>"
+			"<li><p>Sessions usually last about an hour.</p></li>"
+			"<li><p>Be specific about your needs.</p></li>"
+			"<li><p>Students may have to share the session with other students.</p></li>"
+			"<li><p>Bring your textbooks, class notes, assignment guidelines, drafts, dictionary, flash drive, calculator, etc. to the session.</p></li>"
+			"<li><p>TUTORS WILL review examples of similar problems in order to develop  your understanding of the material.</p></li>"
+			"<li><p>TUTORS WILL help you develop your proofreading and writing skills.</p></li>"
+			"<li><p>Tutors will not correct your homework or paper or take-home exam.</p></li>"
+			"<li><p>Tutors will not proofread your papers.</p></li>"
+			"<li><p>Tutors will not grade your assignments.</p></li>"
+			"</ul>"
+			"</body> "
+			"</html>";
 
-	QString sender = "your gmail email address here";
+	QString sender = ""; // don't forget to fill in the details here
+	QString password = ""
 	QString recipient = emailLineEdit->text();
 	QString mailhost = "smtp.gmail.com"; 
 	const int port = 587;                    
-	QString password = "your email password here";
 
 	Context::Ptr ptrContext = new Context(Context::CLIENT_USE, "", Context::VERIFY_NONE, 9, false, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
 	SSLManager::instance().initializeClient(0, 0, ptrContext);
@@ -229,11 +243,11 @@ int RequestForTutorialAssistanceDialog::sendEmail()
 	try {
 		progressDialog->setValue(10);
 		MailMessage message;
+		message.addPart("content", new StringPartSource(content.toStdString(), "text/html"), MailMessage::CONTENT_INLINE, MailMessage::ENCODING_8BIT);
 		message.setSender(sender.toStdString());
 		message.addRecipient(MailRecipient(MailRecipient::PRIMARY_RECIPIENT, recipient.toStdString()));
 		progressDialog->setValue(30);
 		message.setSubject("Your request for tutorial services at HCCC");
-		message.addContent(new StringPartSource(content.toStdString()));
 		progressDialog->setValue(50);
 		SecureSMTPClientSession session(mailhost.toStdString(), port);
 		session.login();
