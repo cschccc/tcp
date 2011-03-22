@@ -367,5 +367,6 @@ void MainWindow::openDatabase()
 		query.exec("create table student_info (sid text primary key, first_name text, last_name text, phone_number text, "
 			"dob text, address text, city text, state text, zip_code text, email text, married text, children text, "
 			"gender text, ethnicity text, major text, financial_aid_program text)");
+		query.exec("create table term (tid text primary key autoincrement, term text)");
 	}
 }
