@@ -243,11 +243,11 @@ int RequestForTutorialAssistanceDialog::sendEmail()
 	try {
 		progressDialog->setValue(10);
 		MailMessage message;
-		message.addPart("content", new StringPartSource(content.toStdString(), "text/html"), MailMessage::CONTENT_INLINE, MailMessage::ENCODING_8BIT);
 		message.setSender(sender.toStdString());
 		message.addRecipient(MailRecipient(MailRecipient::PRIMARY_RECIPIENT, recipient.toStdString()));
-		progressDialog->setValue(30);
 		message.setSubject("Your request for tutorial services at HCCC");
+		message.addPart("content", new StringPartSource(content.toStdString(), "text/html"), MailMessage::CONTENT_INLINE, MailMessage::ENCODING_8BIT);
+		progressDialog->setValue(30);
 		progressDialog->setValue(50);
 		SecureSMTPClientSession session(mailhost.toStdString(), port);
 		session.login();
@@ -261,7 +261,9 @@ int RequestForTutorialAssistanceDialog::sendEmail()
 	} 
 	catch (Exception& exc)
 	{
-		return 1;
+		QMessageBox::critical(this, tr("HCCC Tutoring Center"),
+			tr("Confirmation email could not be sent. Please check your Internet connection."));
+		return -1;
 	}
 
 	return 0;

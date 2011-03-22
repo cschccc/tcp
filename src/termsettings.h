@@ -17,6 +17,7 @@ public:
 
 public slots:
 	void termSelected(QListWidgetItem *);
+	void addButtonClicked();
 
 private:
 	QLabel *termLabel;

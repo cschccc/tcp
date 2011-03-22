@@ -6,6 +6,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QListWidgetItem>
+#include <QInputDialog>
+#include <QMessageBox>
 
 TermSettings::TermSettings(QWidget *parent)
 	:QWidget(parent)
@@ -18,7 +20,11 @@ TermSettings::TermSettings(QWidget *parent)
 	editButton = new QPushButton(tr("Edit"));
 	removeButton = new QPushButton(tr("Remove"));
 
+	editButton->setEnabled(false);
+	removeButton->setEnabled(false);
+
 	connect(termList, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(termSelected(QListWidgetItem *)));
+	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 
 	QHBoxLayout *termLayout = new QHBoxLayout;
 	termLayout->addWidget(termLabel);
@@ -47,4 +53,19 @@ TermSettings::TermSettings(QWidget *parent)
 void TermSettings::termSelected(QListWidgetItem *term)
 {
 	currentTermLabel->setText(term->text());
+}
+
+void TermSettings::addButtonClicked()
+{
+	bool ok;
+
+	QString newTerm = QInputDialog::getText(this, tr("Add new term"), tr("Term name:"),
+		QLineEdit::Normal, QString(), &ok);
+
+	if (ok && !newTerm.isEmpty()) {
+		if (termList->findItems(newTerm, Qt::MatchFixedString).size() > 0)
+			QMessageBox::information(this, tr("HCCC Tutoring Center"), newTerm + tr(" is already in the term list."));
+		else
+			termList->addItem(newTerm);
+	}
 }
