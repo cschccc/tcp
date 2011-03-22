@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "requestfortutorialassistancedialog.h"
-#include "programsettingsdialog.h"
+#include "settingsdialog.h"
 #include "reportdialog.h"
 
 #include <QPushButton>
@@ -49,13 +49,12 @@ MainWindow::MainWindow()
 
 	requestForTutorialAssistanceDialog = new RequestForTutorialAssistanceDialog(this);
 	reportDialog = new ReportDialog(this);
-	programSettingsDialog = new ProgramSettingsDialog(this);
+	settingsDialog = new SettingsDialog(this);
 
 	connect(newStudentButton, SIGNAL(clicked()), this, SLOT(newStudentButtonClicked()));
 	connect(quitButton, SIGNAL(clicked()), this, SLOT(accept()));
 	connect(reportButton, SIGNAL(clicked()), this, SLOT(reportButtonClicked()));
 	connect(settingsButton, SIGNAL(clicked()), this, SLOT(settingsButtonClicked()));
-	connect(programSettingsDialog, SIGNAL(programSettingsChanged()), this, SLOT(programSettingsChanged()));
 
 	setLayout(layout);
 	setWindowTitle(tr("HCCC Tutoring Center"));
@@ -78,17 +77,7 @@ void MainWindow::reportButtonClicked()
 
 void MainWindow::settingsButtonClicked()
 {
-	QFile file("settings.dat");
-	if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		QTextStream in(&file);
-		QString line;
-		line = in.readLine();
-		programSettingsDialog->setLocation(line);
-		line = in.readLine();
-		programSettingsDialog->setTerm(line);
-		file.close();
-	}
-	programSettingsDialog->exec();
+	settingsDialog->exec();
 }
 
 void MainWindow::openDatabase()

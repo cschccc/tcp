@@ -7,7 +7,7 @@
 
 class RequestForTutorialAssistanceDialog;
 class QPushButton;
-class ProgramSettingsDialog;
+class SettingsDialog;
 class ReportDialog;
 
 class MainWindow : public QDialog
@@ -25,7 +25,7 @@ public slots:
 
 private:
 	RequestForTutorialAssistanceDialog *requestForTutorialAssistanceDialog;
-	ProgramSettingsDialog *programSettingsDialog;
+	SettingsDialog *settingsDialog;
 	ReportDialog *reportDialog;
 	QPushButton *newStudentButton;
 	QPushButton *reportButton;
