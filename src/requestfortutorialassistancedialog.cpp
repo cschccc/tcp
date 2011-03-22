@@ -232,7 +232,7 @@ int RequestForTutorialAssistanceDialog::sendEmail()
 			"</html>";
 
 	QString sender = ""; // don't forget to fill in the details here
-	QString password = ""
+	QString password = "";
 	QString recipient = emailLineEdit->text();
 	QString mailhost = "smtp.gmail.com"; 
 	const int port = 587;                    
