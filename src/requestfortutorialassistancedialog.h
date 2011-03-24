@@ -107,10 +107,10 @@ private:
 	QButtonGroup *genderButtonGroup;
 
 	// contents of the "Language Information" groupbox
-	QLabel *spokenLanguagesLabel;
-	QLineEdit *spokenLanguagesLineEdit;
-	QLabel *writtenLanguagesLabel;
-	QLineEdit *writtenLanguagesLineEdit;
+	//QLabel *spokenLanguagesLabel;
+	//QLineEdit *spokenLanguagesLineEdit;
+	//QLabel *writtenLanguagesLabel;
+	//QLineEdit *writtenLanguagesLineEdit;
 
 	// contents of the "Financial Aid Information" groupbox
 	QLabel *financialAidLabel;
@@ -178,6 +178,9 @@ private:
 	void setAttention(QRadioButton *qRadioButton, bool attention);
 	bool inputValidation();
 	void clearAll();
+	addButton->setText(QApplication::translate("languagesClass", "Add>>", 0, QApplication::UnicodeUTF8));
+        removeButton->setText(QApplication::translate("languagesClass", "<<Remove", 0, QApplication::UnicodeUTF8));
+    } // retranslateUi
 };
 
 #endif // REQUESTFORTUTORIALASSISTANCEDIALOG_H
